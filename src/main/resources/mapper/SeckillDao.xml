@@ -4,4 +4,31 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seckill.dao.SeckillDao">
         <!--目的：为DAO接口方法提供sql语句配置-->
+        <!--术语 CDATA 指的是不应由 XML 解析器进行解析的文本数据。-->
+        <!--在 XML 元素中，"<" 和 "&" 是非法的。-->
+        <!--CDATA 部分中的所有内容都会被解析器忽略。-->
+        <!--CDATA 部分由 "<![CDATA[" 开始，由 "]]>" 结束：-->
+        <update id="reduceNumber">
+                UPDATE
+                  seckill
+                SET
+                  number = number-1
+                WHERE seckill_id = #{seckillId}
+                AND start_time <![CDATA[ <= ]]> #{killTime}
+                AND end_time >= #{killTime}
+                AND number > 0;
+        </update>
+
+        <select id="queryById" resultType="Seckill" parameterType="long">
+                SELECT seckill_id,name,number,start_time,end_time,create_time FROM seckill
+                WHERE seckill_id = #{seckillId}
+        </select>
+
+        <!--虽然queryAll返回的是list，当时list中存放的时Seckill，故resultType填写Seckill即可-->
+        <select id="queryAll" resultType="Seckill" parameterType="int">
+                SELECT seckill_id,name,number,start_time,end_time,create_time FROM seckill
+                WHERE seckill_id = #{seckillId}
+                ORDER BY create_time DESC
+                limit #{offset},#{limit}
+        </select>
 </mapper>
