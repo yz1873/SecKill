@@ -75,6 +75,7 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
+    <!--基于Java语言的开源json格式解析工具-->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>

@@ -27,7 +27,6 @@
         <!--虽然queryAll返回的是list，当时list中存放的时Seckill，故resultType填写Seckill即可-->
         <select id="queryAll" resultType="Seckill" parameterType="int">
                 SELECT seckill_id,name,number,start_time,end_time,create_time FROM seckill
-                WHERE seckill_id = #{seckillId}
                 ORDER BY create_time DESC
                 limit #{offset},#{limit}
         </select>
