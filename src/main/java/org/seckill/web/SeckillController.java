@@ -60,7 +60,7 @@ public class SeckillController {
             produces = {"application/json;charset=UTF-8"})
     //produces告诉浏览器我们的content的type，为application/json
     @ResponseBody //当springmvc看到这个注解时，会试图将我们的返回类型(SeckillResult<Exposer>)包装成json
-    public SeckillResult<Exposer> exposer(Long seckillId) {
+    public SeckillResult<Exposer> exposer(@PathVariable("seckillId") Long seckillId) {
 
         SeckillResult<Exposer> result;
 
@@ -68,6 +68,7 @@ public class SeckillController {
             Exposer exposer = seckillService.exportSeckillUrl(seckillId);
             result = new SeckillResult<Exposer>(true, exposer);
         } catch (Exception e) {
+            System.out.println("asdasd");
             logger.error(e.getMessage(), e);
             result = new SeckillResult<Exposer>(false, e.getMessage());
         }
@@ -80,27 +81,25 @@ public class SeckillController {
     @ResponseBody
     public SeckillResult<SeckillExecution> execute(@PathVariable("seckillId") Long seckillId,
                                                    @PathVariable("md5") String md5,
-                                                   @CookieValue(value = "killPhone", required = false) Long phone) {
+                                                   @CookieValue(value = "userPhone", required = false) Long phone) {
         //如果在@CookieValue中把required值设为ture，当phone不存在时，系统会报错
         //故把required值设为false，把对于phone是否存在的判断逻辑放在程序中
         if (phone == null) {
             return new SeckillResult<SeckillExecution>(false, "未注册");
         }
 
-        SeckillResult<SeckillExecution> result;
-
         try {
             SeckillExecution seckillExecution = seckillService.executeSeckill(seckillId, phone, md5);
             return new SeckillResult<SeckillExecution>(true, seckillExecution);
         } catch (RepeatKillException e) {
             SeckillExecution execution=new SeckillExecution(seckillId, SeckillStateEnum.REPEAT_KILL);
-            return new SeckillResult<SeckillExecution>(false,execution);
+            return new SeckillResult<SeckillExecution>(true,execution);
         } catch (SeckillCloseException e) {
             SeckillExecution execution=new SeckillExecution(seckillId, SeckillStateEnum.END);
-            return new SeckillResult<SeckillExecution>(false,execution);
+            return new SeckillResult<SeckillExecution>(true,execution);
         } catch (Exception e) {
             SeckillExecution execution=new SeckillExecution(seckillId, SeckillStateEnum.INNER_ERROR);
-            return new SeckillResult<SeckillExecution>(false,execution);
+            return new SeckillResult<SeckillExecution>(true,execution);
         }
     }
     //获取系统时间
