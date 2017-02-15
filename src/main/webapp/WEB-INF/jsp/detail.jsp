@@ -73,7 +73,7 @@
 <%--jQuery countDown倒计时插件--%>
 <script src="http://cdn.bootcss.com/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
 
-<script src="/resources/script/seckill.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/resources/script/seckill.js" type="text/javascript"></script>
 
 <script type="text/javascript">
   //$(function(){ }  这是jquery里的,是当文档载入完毕就执行,的意思

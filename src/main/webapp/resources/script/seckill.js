@@ -6,16 +6,15 @@ var seckill = {
     //封装秒杀相关ajax的url
     URL: {
         now: function () {
-            return '/seckill/time/now';
+            return '/seckill/seckill/time/now';
         },
         exposer: function (seckillId) {
-            return '/seckill/' + seckillId + '/exposer';
+            return '/seckill/seckill/' + seckillId + '/exposer';
         },
         execution: function (seckillId, md5) {
-            return '/seckill/' + seckillId + '/' + md5 + '/execution';
+            return '/seckill/seckill/' + seckillId + '/' + md5 + '/execution';
         }
     },
-
     //验证手机号
     validatePhone: function (phone) {
         //直接判断对象会看对象是否为空,空就是undefine就是false; isNaN 非数字返回true
@@ -48,7 +47,7 @@ var seckill = {
                     var inputPhone = $('#killPhoneKey').val();
                     if (seckill.validatePhone(inputPhone)) {
                         //电话写入cookie(7天过期)
-                        $.cookie('userPhone', inputPhone, {expires: 7, path: '/seckill'});
+                        $.cookie('userPhone', inputPhone, {expires: 7, path: '/seckill/seckill'});
                         //验证通过　　刷新页面
                         window.location.reload();
                     } else {

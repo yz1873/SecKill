@@ -41,7 +41,7 @@
             <td>
               <fmt:formatDate value="${sk.createTime}" pattern="yyyy-MM-dd HH:mm:ss" />
             </td>
-            <td><a class="btn btn-info" href="/seckill/${sk.seckillId}/detail" target="_blank">详情</a></td>
+            <td><a class="btn btn-info" href="<%=request.getContextPath()%>/seckill/${sk.seckillId}/detail" target="_blank">详情</a></td>
           </tr>
         </c:forEach>
         </tbody>
@@ -50,7 +50,7 @@
     </div>
   </div>
 </div>
-
+<a style="display: block;text-align: center;font-size:18px" href="<%=request.getContextPath()%>/seckill/techview" target="_blank">查看秒杀系统的构成</a>
 
 </body>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->

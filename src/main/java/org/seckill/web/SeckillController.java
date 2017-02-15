@@ -29,6 +29,11 @@ public class SeckillController {
     @Autowired
     private SeckillService seckillService;
 
+    @RequestMapping(value = "/techview", method = RequestMethod.GET)
+    public String techview(Model model) {
+        return "TechView";
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
         //model用于存放所有用于渲染list.jsp的数据
